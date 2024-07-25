@@ -18,7 +18,7 @@ export const DishItem = () => {
         </Flex>
 
         <Flex gap={'middle'} vertical>
-          <Button type={'primary'} icon={<EditOutlined />}>
+          <Button type={'default'} icon={<EditOutlined />}>
             Edit
           </Button>
           <Button danger icon={<DeleteOutlined />}>

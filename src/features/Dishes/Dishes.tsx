@@ -1,4 +1,5 @@
 import { Button, Flex, Typography } from 'antd';
+import { Link, Outlet } from 'react-router-dom';
 import { DishItem } from '../../components/DishItem/DishItem';
 
 export const Dishes = () => {
@@ -9,12 +10,16 @@ export const Dishes = () => {
           Dishes
         </Typography.Title>
 
-        <Button type={'primary'}>Add new dish</Button>
+        <Link to={'new-dish'}>
+          <Button type={'primary'}>Add new dish</Button>
+        </Link>
       </Flex>
 
       <Flex gap={'middle'} vertical>
         <DishItem />
       </Flex>
+
+      <Outlet />
     </Flex>
   );
 };

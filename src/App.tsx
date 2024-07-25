@@ -1,5 +1,6 @@
 import './styles/App.css';
 import { Route, Routes } from 'react-router-dom';
+import { DishForm } from './components/DishForm/DishForm';
 import { Header } from './components/Header/Header';
 import { Layout } from './components/Layout/Layout';
 import { Dishes } from './features/Dishes/Dishes';
@@ -10,7 +11,9 @@ export const App = () => {
     <Layout>
       <Header />
       <Routes>
-        <Route path={'/admin/dishes'} element={<Dishes />} />
+        <Route path={'/admin/dishes'} element={<Dishes />}>
+          <Route path={'new-dish'} element={<DishForm />} />
+        </Route>
         <Route path={'/admin/orders'} element={<Orders />} />
       </Routes>
     </Layout>
