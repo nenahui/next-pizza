@@ -1,6 +1,6 @@
 import './styles/App.css';
 import { Route, Routes } from 'react-router-dom';
-import { DishForm } from './components/DishForm/DishForm';
+import { DishForm } from './features/DishForm/DishForm';
 import { Header } from './components/Header/Header';
 import { Layout } from './components/Layout/Layout';
 import { Dishes } from './features/Dishes/Dishes';

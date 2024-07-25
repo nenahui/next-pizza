@@ -1,20 +1,26 @@
 import { Button, Flex, Form, Input, InputNumber, Modal } from 'antd';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../app/hooks';
 import type { Dish } from '../../types';
+import { createDish } from './dishFormThunks';
 
 export const DishForm = () => {
   const navigate = useNavigate();
   const [modalVisible, setModalVisible] = useState(true);
   const [form] = Form.useForm<Dish>();
+  const dispatch = useAppDispatch();
 
   const handleCancel = () => {
     setModalVisible(false);
     navigate('/admin/dishes');
   };
 
-  const onFinish = (values: Dish) => {
+  const onFinish = async (values: Dish) => {
     console.log(values);
+    await dispatch(createDish(values));
+    form.resetFields();
+    handleCancel();
   };
 
   return (

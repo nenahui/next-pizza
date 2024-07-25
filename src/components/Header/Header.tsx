@@ -29,7 +29,14 @@ export const Header = () => {
   return (
     <header>
       <Flex align={'center'} justify={'space-between'} className={'mb-10'}>
-        <Image src={'/logo.svg'} preview={false} alt={'Logo'} width={50} height={50} />
+        <Image
+          src={'/logo.svg'}
+          preview={false}
+          alt={'Logo'}
+          width={60}
+          height={60}
+          style={{ marginTop: 5 }}
+        />
 
         <Menu onClick={onClick} selectedKeys={[current]} mode='horizontal' items={items} />
       </Flex>
