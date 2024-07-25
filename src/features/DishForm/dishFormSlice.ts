@@ -25,4 +25,9 @@ export const dishFormSlice = createSlice({
         state.isCreating = false;
       });
   },
+  selectors: {
+    selectIsCreating: (state) => state.isCreating,
+  },
 });
+
+export const { selectIsCreating } = dishFormSlice.selectors;

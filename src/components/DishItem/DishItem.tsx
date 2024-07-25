@@ -1,5 +1,8 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Card, Flex, Image, Typography } from 'antd';
+import { DeleteOutlined, EditOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { Button, Card, Flex, Image, Popconfirm, Typography } from 'antd';
+import { useAppDispatch } from '../../app/hooks';
+import { fetchDishes } from '../../features/Dishes/dishesThunks';
+import { deleteDish } from '../../features/DishForm/dishFormThunks';
 import type { Dish } from '../../types';
 
 interface Props {
@@ -7,6 +10,13 @@ interface Props {
 }
 
 export const DishItem: React.FC<Props> = ({ dish }) => {
+  const dispatch = useAppDispatch();
+
+  const handleDelete = async () => {
+    await dispatch(deleteDish(dish.id));
+    dispatch(fetchDishes());
+  };
+
   return (
     <Card size={'small'}>
       <Flex justify={'space-between'} align={'center'}>
@@ -26,9 +36,16 @@ export const DishItem: React.FC<Props> = ({ dish }) => {
           <Button type={'default'} icon={<EditOutlined />}>
             Edit
           </Button>
-          <Button danger icon={<DeleteOutlined />}>
-            Delete
-          </Button>
+          <Popconfirm
+            onConfirm={handleDelete}
+            title='Delete the dish'
+            description='Are you sure to delete this dish?'
+            icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+          >
+            <Button danger icon={<DeleteOutlined />}>
+              Delete
+            </Button>
+          </Popconfirm>
         </Flex>
       </Flex>
     </Card>

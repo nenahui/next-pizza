@@ -12,7 +12,8 @@ export const App = () => {
       <Header />
       <Routes>
         <Route path={'/admin/dishes'} element={<Dishes />}>
-          <Route path={'new-dish'} element={<DishForm />} />
+          <Route path={'new-dish'} element={<DishForm formType={'create'} />} />
+          <Route path={'edit-dish/:dishId'} element={<DishForm formType={'edit'} />} />
         </Route>
         <Route path={'/admin/orders'} element={<Orders />} />
       </Routes>

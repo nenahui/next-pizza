@@ -9,3 +9,10 @@ export const createDish = createAsyncThunk<void, ApiDish, { state: RootState }>(
     await axiosApi.post('pizzeria.json', dish);
   }
 );
+
+export const deleteDish = createAsyncThunk<void, string, { state: RootState }>(
+  'dishForm/delete',
+  async (dishId) => {
+    await axiosApi.delete(`pizzeria/${dishId}.json`);
+  }
+);

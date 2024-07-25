@@ -14,6 +14,8 @@ export const Dishes = () => {
     dispatch(fetchDishes());
   }, [dispatch]);
 
+  const dishesElements = dishes.map((dish) => <DishItem dish={dish} key={dish.id} />);
+
   return (
     <Flex vertical gap={'large'}>
       <Flex justify={'space-between'} align={'center'}>
@@ -27,9 +29,11 @@ export const Dishes = () => {
       </Flex>
 
       <Flex gap={'middle'} vertical>
-        {dishes.map((dish) => (
-          <DishItem dish={dish} key={dish.id} />
-        ))}
+        {dishes.length === 0 ? (
+          <Typography.Text type={'secondary'}>No dishes found.</Typography.Text>
+        ) : (
+          dishesElements
+        )}
       </Flex>
 
       <Outlet />

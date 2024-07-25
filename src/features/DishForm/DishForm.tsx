@@ -1,16 +1,22 @@
 import { Button, Flex, Form, Input, InputNumber, Modal } from 'antd';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import type { ApiDish } from '../../types';
 import { fetchDishes } from '../Dishes/dishesThunks';
+import { selectIsCreating } from './dishFormSlice';
 import { createDish } from './dishFormThunks';
 
-export const DishForm = () => {
+interface Props {
+  formType: 'edit' | 'create';
+}
+
+export const DishForm: React.FC<Props> = ({ formType }) => {
   const navigate = useNavigate();
   const [modalVisible, setModalVisible] = useState(true);
   const [form] = Form.useForm<ApiDish>();
   const dispatch = useAppDispatch();
+  const isCreating = useAppSelector(selectIsCreating);
 
   const handleCancel = () => {
     setModalVisible(false);
@@ -19,7 +25,10 @@ export const DishForm = () => {
   };
 
   const onFinish = async (values: ApiDish) => {
-    await dispatch(createDish(values));
+    if (formType === 'create') {
+      await dispatch(createDish(values));
+    }
+
     await dispatch(fetchDishes());
     handleCancel();
   };
@@ -61,7 +70,7 @@ export const DishForm = () => {
             <Input />
           </Form.Item>
 
-          <Button type='primary' htmlType={'submit'}>
+          <Button type='primary' htmlType={'submit'} loading={isCreating}>
             Create a dish
           </Button>
 
