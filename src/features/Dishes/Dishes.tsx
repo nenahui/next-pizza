@@ -1,8 +1,19 @@
 import { Button, Flex, Typography } from 'antd';
+import { useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { DishItem } from '../../components/DishItem/DishItem';
+import { selectIsDishes } from './dishesSlice';
+import { fetchDishes } from './dishesThunks';
 
 export const Dishes = () => {
+  const dishes = useAppSelector(selectIsDishes);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchDishes());
+  }, [dispatch]);
+
   return (
     <Flex vertical gap={'large'}>
       <Flex justify={'space-between'} align={'center'}>
@@ -16,7 +27,9 @@ export const Dishes = () => {
       </Flex>
 
       <Flex gap={'middle'} vertical>
-        <DishItem />
+        {dishes.map((dish) => (
+          <DishItem dish={dish} key={dish.id} />
+        ))}
       </Flex>
 
       <Outlet />

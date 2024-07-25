@@ -2,24 +2,25 @@ import { Button, Flex, Form, Input, InputNumber, Modal } from 'antd';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
-import type { Dish } from '../../types';
+import type { ApiDish } from '../../types';
+import { fetchDishes } from '../Dishes/dishesThunks';
 import { createDish } from './dishFormThunks';
 
 export const DishForm = () => {
   const navigate = useNavigate();
   const [modalVisible, setModalVisible] = useState(true);
-  const [form] = Form.useForm<Dish>();
+  const [form] = Form.useForm<ApiDish>();
   const dispatch = useAppDispatch();
 
   const handleCancel = () => {
     setModalVisible(false);
+    form.resetFields();
     navigate('/admin/dishes');
   };
 
-  const onFinish = async (values: Dish) => {
-    console.log(values);
+  const onFinish = async (values: ApiDish) => {
     await dispatch(createDish(values));
-    form.resetFields();
+    await dispatch(fetchDishes());
     handleCancel();
   };
 
@@ -33,7 +34,7 @@ export const DishForm = () => {
     >
       <Form layout={'vertical'} form={form} onFinish={onFinish}>
         <Flex gap={'10px'} vertical>
-          <Form.Item<Dish>
+          <Form.Item<ApiDish>
             label={'Name of the dish'}
             name={'title'}
             className={'m-0'}
@@ -42,7 +43,7 @@ export const DishForm = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item<Dish>
+          <Form.Item<ApiDish>
             label={'Cost of the dish'}
             name={'price'}
             className={'m-0'}
@@ -51,7 +52,7 @@ export const DishForm = () => {
             <InputNumber style={{ width: '100%' }} />
           </Form.Item>
 
-          <Form.Item<Dish>
+          <Form.Item<ApiDish>
             label={'Enter a link to the image of the dish'}
             name={'image'}
             className={'m-0'}
