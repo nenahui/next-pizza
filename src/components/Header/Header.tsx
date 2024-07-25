@@ -1,5 +1,5 @@
 import { DatabaseOutlined, OrderedListOutlined } from '@ant-design/icons';
-import { Flex, Menu, type MenuProps, Typography } from 'antd';
+import { Flex, Image, Menu, type MenuProps } from 'antd';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -28,10 +28,9 @@ export const Header = () => {
 
   return (
     <header>
-      <Flex align={'center'} justify={'space-between'}>
-        <Typography.Title level={4} className={'m-0'}>
-          Pizza Admin
-        </Typography.Title>
+      <Flex align={'center'} justify={'space-between'} className={'mb-10'}>
+        <Image src={'/logo.svg'} preview={false} alt={'Logo'} width={50} height={50} />
+
         <Menu onClick={onClick} selectedKeys={[current]} mode='horizontal' items={items} />
       </Flex>
     </header>

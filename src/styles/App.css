@@ -12,11 +12,19 @@
 }
 
 .container {
-  max-width: 450px;
+  max-width: 350px;
   margin: 0 auto;
   padding: 1rem;
 }
 
 .m-0 {
   margin: 0 !important;
+}
+
+.fw-400 {
+  font-weight: 400 !important;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
 }
