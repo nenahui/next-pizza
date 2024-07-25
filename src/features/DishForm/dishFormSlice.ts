@@ -1,12 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createDish } from './dishFormThunks';
+import type { ApiDish } from '../../types';
+import { createDish, editDish, getDishValues } from './dishFormThunks';
 
 export interface dishFormState {
   isCreating: boolean;
+  isEditing: boolean;
+  isDishFetching: boolean;
+  initialValues: ApiDish | null;
 }
 
 const initialState: dishFormState = {
   isCreating: false,
+  isEditing: false,
+  isDishFetching: false,
+  initialValues: null,
 };
 
 export const dishFormSlice = createSlice({
@@ -24,10 +31,38 @@ export const dishFormSlice = createSlice({
       .addCase(createDish.rejected, (state) => {
         state.isCreating = false;
       });
+
+    builder
+      .addCase(editDish.pending, (state) => {
+        state.isEditing = true;
+      })
+      .addCase(editDish.fulfilled, (state) => {
+        state.isEditing = false;
+      })
+      .addCase(editDish.rejected, (state) => {
+        state.isEditing = false;
+      });
+
+    builder
+      .addCase(getDishValues.pending, (state) => {
+        state.initialValues = null;
+        state.isDishFetching = true;
+      })
+      .addCase(getDishValues.fulfilled, (state, { payload: dishInfo }) => {
+        state.initialValues = dishInfo;
+        state.isDishFetching = false;
+      })
+      .addCase(getDishValues.rejected, (state) => {
+        state.isDishFetching = false;
+      });
   },
   selectors: {
     selectIsCreating: (state) => state.isCreating,
+    selectIsEditing: (state) => state.isEditing,
+    selectInitialValues: (state) => state.initialValues,
+    selectIsDishFetching: (state) => state.isDishFetching,
   },
 });
 
-export const { selectIsCreating } = dishFormSlice.selectors;
+export const { selectIsCreating, selectIsEditing, selectInitialValues, selectIsDishFetching } =
+  dishFormSlice.selectors;

@@ -1,5 +1,6 @@
 import { DeleteOutlined, EditOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { Button, Card, Flex, Image, Popconfirm, Typography } from 'antd';
+import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { fetchDishes } from '../../features/Dishes/dishesThunks';
 import { deleteDish } from '../../features/DishForm/dishFormThunks';
@@ -33,9 +34,11 @@ export const DishItem: React.FC<Props> = ({ dish }) => {
         </Flex>
 
         <Flex gap={'middle'} vertical>
-          <Button type={'default'} icon={<EditOutlined />}>
-            Edit
-          </Button>
+          <Link to={`edit-dish/${dish.id}`}>
+            <Button type={'default'} icon={<EditOutlined />}>
+              Edit
+            </Button>
+          </Link>
           <Popconfirm
             onConfirm={handleDelete}
             title='Delete the dish'
