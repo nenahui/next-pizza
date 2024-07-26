@@ -24,9 +24,7 @@ export const DishItem: React.FC<Props> = ({ dish }) => {
         <Image src={dish.image} width={80} height={80} />
 
         <Flex vertical>
-          <Typography.Title level={5} className={'m-0'}>
-            {dish.title}
-          </Typography.Title>
+          <Typography.Text style={{ fontSize: 14 }}>{dish.title}</Typography.Text>
 
           <Typography.Text>
             {dish.price} <Typography.Text type={'secondary'}>KGS</Typography.Text>
@@ -35,7 +33,7 @@ export const DishItem: React.FC<Props> = ({ dish }) => {
 
         <Flex gap={'middle'} vertical>
           <Link to={`edit-dish/${dish.id}`}>
-            <Button type={'default'} icon={<EditOutlined />}>
+            <Button size={'small'} type={'default'} icon={<EditOutlined />}>
               Edit
             </Button>
           </Link>
@@ -45,7 +43,7 @@ export const DishItem: React.FC<Props> = ({ dish }) => {
             description='Are you sure to delete this dish?'
             icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
           >
-            <Button danger icon={<DeleteOutlined />}>
+            <Button size={'small'} danger icon={<DeleteOutlined />}>
               Delete
             </Button>
           </Popconfirm>

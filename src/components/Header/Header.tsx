@@ -1,5 +1,5 @@
 import { DatabaseOutlined, OrderedListOutlined } from '@ant-design/icons';
-import { Flex, Image, Menu, type MenuProps } from 'antd';
+import { Flex, Menu, type MenuProps, Typography } from 'antd';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -20,7 +20,9 @@ const items: MenuItem[] = [
 
 export const Header = () => {
   const { pathname: currentPage } = useLocation();
-  const [current, setCurrent] = useState(currentPage.slice(7));
+  const [current, setCurrent] = useState(
+    currentPage.includes('admin') ? 'dishes' : currentPage.slice(7)
+  );
 
   const onClick: MenuProps['onClick'] = (e) => {
     setCurrent(e.key);
@@ -29,16 +31,13 @@ export const Header = () => {
   return (
     <header>
       <Flex align={'center'} justify={'space-between'} className={'mb-10'}>
-        <Image
-          src={'/logo.svg'}
-          preview={false}
-          alt={'Logo'}
-          width={60}
-          height={60}
-          style={{ marginTop: 5 }}
-        />
+        <Typography.Text style={{ fontSize: 22 }} className={'logo'}>
+          Next {currentPage.includes('admin') ? 'Admin' : 'Pizza'}
+        </Typography.Text>
 
-        <Menu onClick={onClick} selectedKeys={[current]} mode='horizontal' items={items} />
+        {currentPage.includes('admin') && (
+          <Menu onClick={onClick} selectedKeys={[current]} mode='horizontal' items={items} />
+        )}
       </Flex>
     </header>
   );

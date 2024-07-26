@@ -4,12 +4,12 @@ import { fetchDishes } from './dishesThunks';
 
 export interface DishesState {
   dishes: Dish[];
-  isFetching: boolean;
+  isDishesFetching: boolean;
 }
 
 const initialState: DishesState = {
   dishes: [],
-  isFetching: false,
+  isDishesFetching: false,
 };
 
 export const dishesSlice = createSlice({
@@ -19,19 +19,20 @@ export const dishesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchDishes.pending, (state) => {
-        state.isFetching = true;
+        state.isDishesFetching = true;
       })
       .addCase(fetchDishes.fulfilled, (state, { payload: ApiDishes }) => {
-        state.isFetching = false;
+        state.isDishesFetching = false;
         state.dishes = ApiDishes;
       })
       .addCase(fetchDishes.rejected, (state) => {
-        state.isFetching = false;
+        state.isDishesFetching = false;
       });
   },
   selectors: {
+    selectIsDishesFetching: (state) => state.isDishesFetching,
     selectIsDishes: (state) => state.dishes,
   },
 });
 
-export const { selectIsDishes } = dishesSlice.selectors;
+export const { selectIsDishes, selectIsDishesFetching } = dishesSlice.selectors;
