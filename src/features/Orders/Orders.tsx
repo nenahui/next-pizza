@@ -28,6 +28,9 @@ export const Orders = () => {
         <Spin className={'a-centered'} />
       ) : (
         <Flex vertical gap={'middle'}>
+          {orders.length === 0 && (
+            <Typography.Text type={'secondary'}>Order list is a empty.</Typography.Text>
+          )}
           {orders.map((order) => {
             return (
               <Card key={nanoid()}>
