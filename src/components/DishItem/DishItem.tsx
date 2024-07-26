@@ -8,9 +8,10 @@ import type { Dish } from '../../types';
 
 interface Props {
   dish: Dish;
+  admin?: boolean;
 }
 
-export const DishItem: React.FC<Props> = ({ dish }) => {
+export const DishItem: React.FC<Props> = ({ dish, admin = false }) => {
   const dispatch = useAppDispatch();
 
   const handleDelete = async () => {
@@ -19,35 +20,46 @@ export const DishItem: React.FC<Props> = ({ dish }) => {
   };
 
   return (
-    <Card size={'small'}>
+    <Card size={'small'} style={{ cursor: admin ? 'default' : 'pointer' }}>
       <Flex justify={'space-between'} align={'center'}>
         <Image src={dish.image} width={80} height={80} />
 
-        <Flex vertical>
-          <Typography.Text style={{ fontSize: 14 }}>{dish.title}</Typography.Text>
+        {admin ? (
+          <Flex vertical>
+            <Typography.Text style={{ fontSize: 14 }}>{dish.title}</Typography.Text>
 
-          <Typography.Text>
-            {dish.price} <Typography.Text type={'secondary'}>KGS</Typography.Text>
-          </Typography.Text>
-        </Flex>
+            <Typography.Text>
+              {dish.price} <Typography.Text type={'secondary'}>KGS</Typography.Text>
+            </Typography.Text>
+          </Flex>
+        ) : (
+          <>
+            <Typography.Text style={{ fontSize: 14 }}>{dish.title}</Typography.Text>
+            <Typography.Text>
+              {dish.price} <Typography.Text type={'secondary'}>KGS</Typography.Text>
+            </Typography.Text>
+          </>
+        )}
 
-        <Flex gap={'middle'} vertical>
-          <Link to={`edit-dish/${dish.id}`}>
-            <Button size={'small'} type={'default'} icon={<EditOutlined />}>
-              Edit
-            </Button>
-          </Link>
-          <Popconfirm
-            onConfirm={handleDelete}
-            title='Delete the dish'
-            description='Are you sure to delete this dish?'
-            icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
-          >
-            <Button size={'small'} danger icon={<DeleteOutlined />}>
-              Delete
-            </Button>
-          </Popconfirm>
-        </Flex>
+        {admin && (
+          <Flex gap={'middle'} vertical>
+            <Link to={`edit-dish/${dish.id}`}>
+              <Button size={'small'} type={'default'} icon={<EditOutlined />}>
+                Edit
+              </Button>
+            </Link>
+            <Popconfirm
+              onConfirm={handleDelete}
+              title='Delete the dish'
+              description='Are you sure to delete this dish?'
+              icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+            >
+              <Button size={'small'} danger icon={<DeleteOutlined />}>
+                Delete
+              </Button>
+            </Popconfirm>
+          </Flex>
+        )}
       </Flex>
     </Card>
   );

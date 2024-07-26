@@ -20,7 +20,7 @@ export const Dishes = () => {
     dishes.length === 0 ? (
       <Typography.Text type={'secondary'}>No dishes found.</Typography.Text>
     ) : (
-      dishes.map((dish) => <DishItem dish={dish} key={dish.id} />)
+      dishes.map((dish) => <DishItem dish={dish} key={dish.id} admin />)
     );
 
   return (

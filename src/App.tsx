@@ -4,6 +4,7 @@ import { DishForm } from './features/DishForm/DishForm';
 import { Header } from './components/Header/Header';
 import { Layout } from './components/Layout/Layout';
 import { Dishes } from './features/Dishes/Dishes';
+import { Home } from './features/Home/Home';
 import { Orders } from './features/Orders/Orders';
 
 export const App = () => {
@@ -11,6 +12,7 @@ export const App = () => {
     <Layout>
       <Header />
       <Routes>
+        <Route path={'/'} element={<Home />} />
         <Route path={'/admin'} element={<Dishes />}>
           <Route path={'new-dish'} element={<DishForm formType={'create'} />} />
           <Route path={'edit-dish/:dishId'} element={<DishForm formType={'edit'} />} />
