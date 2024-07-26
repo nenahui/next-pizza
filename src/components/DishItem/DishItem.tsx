@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { fetchDishes } from '../../features/Dishes/dishesThunks';
 import { deleteDish } from '../../features/DishForm/dishFormThunks';
+import { addToCart } from '../../features/Home/homeSlice';
 import type { Dish } from '../../types';
 
 interface Props {
@@ -19,8 +20,14 @@ export const DishItem: React.FC<Props> = ({ dish, admin = false }) => {
     dispatch(fetchDishes());
   };
 
+  const addToCartDish = () => {
+    if (!admin) {
+      dispatch(addToCart(dish));
+    }
+  };
+
   return (
-    <Card size={'small'} style={{ cursor: admin ? 'default' : 'pointer' }}>
+    <Card size={'small'} style={{ cursor: admin ? 'default' : 'pointer' }} onClick={addToCartDish}>
       <Flex justify={'space-between'} align={'center'}>
         <Image src={dish.image} width={80} height={80} />
 

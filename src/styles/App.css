@@ -35,3 +35,12 @@
 .mb-10 {
   margin-bottom: 10px;
 }
+
+.order-block {
+  width: calc(350px - 1rem);
+  border-radius: 12px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}

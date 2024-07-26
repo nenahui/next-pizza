@@ -6,7 +6,7 @@ import type { ApiDishes, Dish } from '../../types';
 export const fetchDishes = createAsyncThunk<Dish[], void, { state: RootState }>(
   'home/fetch',
   async () => {
-    const { data: dishes } = await axiosApi.get<ApiDishes | null>('pizzeria.json');
+    const { data: dishes } = await axiosApi.get<ApiDishes | null>('pizzeria/dishes.json');
 
     if (dishes === null) {
       return [];
@@ -18,3 +18,5 @@ export const fetchDishes = createAsyncThunk<Dish[], void, { state: RootState }>(
     }));
   }
 );
+
+export const createOrder = createAsyncThunk('home/create', (order) => {});
