@@ -3,12 +3,19 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { DishItem } from '../../components/DishItem/DishItem';
 import { OrderItem } from '../../components/OrderItem/OrderItem';
-import { selectCart, selectIsDishes, selectIsFetching, selectTotalPrice } from './homeSlice';
-import { fetchDishes } from './homeThunks';
+import {
+  selectCart,
+  selectIsCreating,
+  selectIsDishes,
+  selectIsFetching,
+  selectTotalPrice,
+} from './homeSlice';
+import { createOrder, fetchDishes } from './homeThunks';
 
 export const Home = () => {
   const dishes = useAppSelector(selectIsDishes);
   const isFetching = useAppSelector(selectIsFetching);
+  const isCreating = useAppSelector(selectIsCreating);
   const dispatch = useAppDispatch();
   const totalPrice = useAppSelector(selectTotalPrice);
   const [modalVisible, setModalVisible] = useState(false);
@@ -24,6 +31,13 @@ export const Home = () => {
     ) : (
       dishes.map((dish) => <DishItem dish={dish} key={dish.id} />)
     );
+
+  const onSubmit = async () => {
+    const order = Object.fromEntries(cart.map((item) => [item.dish.id, item.amount]));
+
+    await dispatch(createOrder(order));
+    setModalVisible(false);
+  };
 
   return (
     <>
@@ -48,14 +62,26 @@ export const Home = () => {
       <Modal
         okText={'Order'}
         open={modalVisible}
+        confirmLoading={isCreating}
         onCancel={() => setModalVisible(false)}
         style={{ maxWidth: 350 }}
         title={'Your order'}
-        onOk={() => console.log(cart)}
+        onOk={onSubmit}
       >
         {cart.map((dish) => (
           <OrderItem dish={dish} key={dish.dish.id} />
         ))}
+
+        <Flex vertical style={{ marginTop: 15 }}>
+          <Typography.Paragraph>
+            Delivery 150 <Typography.Text type={'secondary'}>KGS</Typography.Text>
+          </Typography.Paragraph>
+
+          <Typography.Text>
+            Total {totalPrice + 150}&nbsp;
+            <Typography.Text type={'secondary'}>KGS</Typography.Text>
+          </Typography.Text>
+        </Flex>
       </Modal>
     </>
   );

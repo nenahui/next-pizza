@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 import axiosApi from '../../axiosApi';
-import type { ApiDishes, Dish } from '../../types';
+import type { ApiDishes, Dish, Order } from '../../types';
 
 export const fetchDishes = createAsyncThunk<Dish[], void, { state: RootState }>(
   'home/fetch',
@@ -19,4 +19,9 @@ export const fetchDishes = createAsyncThunk<Dish[], void, { state: RootState }>(
   }
 );
 
-export const createOrder = createAsyncThunk('home/create', (order) => {});
+export const createOrder = createAsyncThunk<void, Order, { state: RootState }>(
+  'home/create',
+  async (order) => {
+    await axiosApi.post('pizzeria/orders.json', order);
+  }
+);

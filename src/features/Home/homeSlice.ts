@@ -1,12 +1,13 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { CartDish, Dish } from '../../types';
-import { fetchDishes } from './homeThunks';
+import { createOrder, fetchDishes } from './homeThunks';
 
 export interface homeState {
   dishes: Dish[];
   cart: CartDish[];
   totalPrice: number;
   isFetching: boolean;
+  isCreating: boolean;
 }
 
 const initialState: homeState = {
@@ -14,6 +15,7 @@ const initialState: homeState = {
   cart: [],
   totalPrice: 0,
   isFetching: false,
+  isCreating: false,
 };
 
 const homeSlice = createSlice({
@@ -41,6 +43,10 @@ const homeSlice = createSlice({
         state.cart.splice(dishIndex, 1);
       }
     },
+    clearCart: (state) => {
+      state.cart = [];
+      state.totalPrice = 0;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -54,16 +60,30 @@ const homeSlice = createSlice({
       .addCase(fetchDishes.rejected, (state) => {
         state.isFetching = false;
       });
+
+    builder
+      .addCase(createOrder.pending, (state) => {
+        state.isCreating = true;
+      })
+      .addCase(createOrder.fulfilled, (state) => {
+        state.isCreating = false;
+        state.cart = [];
+        state.totalPrice = 0;
+      })
+      .addCase(createOrder.rejected, (state) => {
+        state.isCreating = false;
+      });
   },
   selectors: {
     selectIsFetching: (state) => state.isFetching,
     selectIsDishes: (state) => state.dishes,
     selectTotalPrice: (state) => state.totalPrice,
     selectCart: (state) => state.cart,
+    selectIsCreating: (state) => state.isCreating,
   },
 });
 
-export const { selectIsFetching, selectIsDishes, selectTotalPrice, selectCart } =
+export const { selectIsFetching, selectIsDishes, selectTotalPrice, selectCart, selectIsCreating } =
   homeSlice.selectors;
-export const { addToCart, removeFromCart } = homeSlice.actions;
+export const { addToCart, removeFromCart, clearCart } = homeSlice.actions;
 export default homeSlice.reducer;
