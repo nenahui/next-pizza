@@ -42,7 +42,7 @@ export const DishForm: React.FC<Props> = ({ formType }) => {
   const handleCancel = () => {
     setModalVisible(false);
     form.resetFields();
-    navigate('/admin/dishes');
+    navigate('/admin');
   };
 
   const onFinish = async (values: ApiDish) => {

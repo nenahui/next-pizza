@@ -7,22 +7,20 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
   {
-    label: <Link to={'/admin/dishes'}>Dishes</Link>,
-    key: 'dishes',
+    label: <Link to={'/admin'}>Dishes</Link>,
+    key: 'admin',
     icon: <DatabaseOutlined />,
   },
   {
     label: <Link to={'/admin/orders'}>Orders</Link>,
-    key: 'orders',
+    key: 'admin/orders',
     icon: <OrderedListOutlined />,
   },
 ];
 
 export const Header = () => {
   const { pathname: currentPage } = useLocation();
-  const [current, setCurrent] = useState(
-    currentPage.includes('admin') ? 'dishes' : currentPage.slice(7)
-  );
+  const [current, setCurrent] = useState(currentPage.slice(1));
 
   const onClick: MenuProps['onClick'] = (e) => {
     setCurrent(e.key);
