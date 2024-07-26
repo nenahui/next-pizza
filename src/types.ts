@@ -17,6 +17,12 @@ export interface CartDish {
   amount: number;
 }
 
-export interface Order {
+export interface ApiOrders {
   [id: string]: number;
+}
+
+export interface Order {
+  amount: number;
+  dish: ApiDish;
+  orderId: string;
 }
